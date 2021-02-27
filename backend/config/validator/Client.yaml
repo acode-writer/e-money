@@ -1,0 +1,28 @@
+App\Entity\Client:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: [phoneNumber]
+  properties:
+    fullname:
+      - NotBlank:
+          message: Ce champ est obligatoire.
+    phoneNumber:
+      - NotBlank:
+          message: 'Le champ numero de telephone est obligatoire.'
+      - Length:
+          min: 9
+          max: 14
+      - Regex:
+          pattern: '/^(\+221){0,1}(33|70|76|77|78){1}[0-9]{7}/'
+          match: true
+          message: Un numero valid est sous la form "(33 Ou 77 ou 76 ou 70 ou 78)XXXXXX"
+    nicNumber:
+      - NotBlank:
+          message: Ce champ est obligatoire.
+      - Length:
+          min: 13
+          max: 13
+      - Regex:
+          pattern: '/\d/'
+          match: true
+          message: "Un numero de carte d'identite ne contient pas des lettres."
