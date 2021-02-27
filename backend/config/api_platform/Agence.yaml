@@ -1,0 +1,41 @@
+App\Entity\Agence:
+    attributes:
+        security: is_granted('ROLE_USER_AGENCE')
+        security_message: Seul les admin ou utilisateurs de l'agence peuvent accèder à cette resource.
+    properties:
+        users:
+            subresource:
+                resourceClass: App\Entity\User
+        account:
+            subresource:
+                resourceClass: App\Entity\Account
+    collectionOperations:
+        get_agences:
+            method: GET
+    itemOperations:
+        get_agence:
+            method: GET
+        block_user_agence:
+            method: PUT
+            path: /agences/{id}/users
+            requirements:
+                userId: \d+
+            normalization_context:
+                groups: ['block_user_agence:read']
+        get_user_agence_by_id:
+            method: GET
+            path: /agences/{id}/users
+            requirements:
+                userId: \d+
+        get_agence_parts:
+            method: GET
+            path: /agences/{id}/parts
+            normalization_context:
+                groups: ['get_agence_parts:read']
+        block_agence:
+            method: DELETE
+            path: /admin/agences/{id}
+            requirements:
+                id: \d+
+            security: is_granted('ROLE_ADMIN_AGENCE')
+            security_message: Seul l'admin de l'agence peut accèder à cette ressource.

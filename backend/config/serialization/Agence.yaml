@@ -1,0 +1,16 @@
+App\Entity\Agence:
+    attributes:
+        id:
+            groups: ['get_agence_parts:read','block_user_agence:read','create_account:read']
+        phoneNumber:
+            groups: ['create_user:write','get_agence_parts:read','create_account:write','create_account:read']
+        address:
+            groups: ['create_user:write','get_agence_parts:read','create_account:write','create_account:read']
+        latitude:
+            groups: ['create_user:write','get_agence_parts:read','create_account:write','create_account:read']
+        longitude:
+            groups: ['create_user:write','get_agence_parts:read','create_account:write','create_account:read']
+        account:
+            groups: ['get_agence_parts:read']
+        users:
+            groups: ['block_user_agence:read']

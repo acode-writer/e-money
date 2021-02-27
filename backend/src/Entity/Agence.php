@@ -44,6 +44,11 @@ class Agence
      */
     private $users;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Account::class, mappedBy="agence", cascade={"persist", "remove"})
+     */
+    private $account;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -128,6 +133,28 @@ class Agence
                 $user->setAgence(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAccount(): ?Account
+    {
+        return $this->account;
+    }
+
+    public function setAccount(?Account $account): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($account === null && $this->account !== null) {
+            $this->account->setAgence(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($account !== null && $account->getAgence() !== $this) {
+            $account->setAgence($this);
+        }
+
+        $this->account = $account;
 
         return $this;
     }
