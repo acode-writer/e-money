@@ -1,0 +1,38 @@
+App\Entity\Account:
+  attributes:
+    route_prefix:
+    filters: ['get_by_id']
+  properties:
+    transactions:
+      subresource:
+        security: is_granted('ROLE_ADMIN_AGENCE')
+        security_message: Seul l'admin de l'agence peut accèder à cette ressource.
+        resourceClass: App\Entity\Transaction
+        collection: false
+  collectionOperations:
+    get_accounts:
+      method: GET
+    create_account:
+      method: POST
+      path: /admin/accounts
+      denormalization_context:
+        groups: ['create_account:write']
+      normalization_context:
+        groups: ['create_account:read']
+      security: is_granted('ROLE_ADMIN_AGENCE')
+      security_message: Seul l'admin de l'agence peut accèder à cette ressource.
+  itemOperations:
+    get_account:
+      method: GET
+      path: /admin/accounts/{id}
+      requirements:
+        id: \d+
+    recharge_account:
+      route_prefix:
+      method: PUT
+      path: /cashier/accounts/{id}
+      denormalization_context:
+        groups: [ 'recharge_account:write' ]
+      validation_groups: [ App\Entity\Account, 'recharge_account_validation']
+      security: is_granted('ROLE_CASHIER')
+      security_message: Seul le caissier et/ou l'admin de l'agence peuvent accèder à cette ressource

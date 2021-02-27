@@ -39,10 +39,7 @@ class Account
      */
     private $status;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Agence::class, cascade={"persist", "remove"})
-     */
-    private $agence;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="accounts")
@@ -54,9 +51,15 @@ class Account
      */
     private $transactions;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Agence::class, inversedBy="account", cascade={"persist", "remove"})
+     */
+    private $agence;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -111,18 +114,7 @@ class Account
 
         return $this;
     }
-
-    public function getAgence(): ?Agence
-    {
-        return $this->agence;
-    }
-
-    public function setAgence(?Agence $agence): self
-    {
-        $this->agence = $agence;
-
-        return $this;
-    }
+    
 
     public function getCashier(): ?User
     {
@@ -162,6 +154,18 @@ class Account
                 $transaction->setAccount(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAgence(): ?Agence
+    {
+        return $this->agence;
+    }
+
+    public function setAgence(?Agence $agence): self
+    {
+        $this->agence = $agence;
 
         return $this;
     }

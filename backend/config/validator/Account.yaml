@@ -1,0 +1,13 @@
+App\Entity\Account:
+  properties:
+    balance:
+      - NotBlank:
+          message: "Ce champ est obligatoire"
+          groups: ['recharge_account_validation']
+      - GreaterThanOrEqual:
+          value: 700000
+          message: "Le solde minimal lors de la creation d'un compte est de 700.000"
+    agence:
+      - NotNull:
+          message: "Un compte est obligatoirement associé à une agence."
+      - Valid: ~

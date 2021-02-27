@@ -1,0 +1,14 @@
+App\Entity\Account:
+  attributes:
+    id:
+      groups: ['make_deposit:write', 'make_withdrawal:write','get_agence_parts:read','create_account:write','create_account:read','recharge_account:write']
+    accountNumber:
+      groups: ['make_deposit:write', 'make_withdrawal:write','get_agence_parts:read','create_account:read']
+    balance:
+      groups: ['create_account:write','create_account:read','recharge_account:write']
+    agence:
+      groups: ['create_account:write','create_account:read']
+    transactions:
+      groups: ['get_agence_parts:read']
+    status:
+      groups: ['create_account:read']
