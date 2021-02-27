@@ -1,0 +1,25 @@
+App\Entity\User:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: [ phoneNumber, email ]
+  properties:
+    email:
+      - NotBlank:
+          message: 'ce champ est obligatoire'
+      - Email:
+          message: "Cet email: {{ value }} est invalide."
+    password:
+      - NotBlank:
+          message: "Ce champ est obligatoire"
+    phoneNumber:
+      - NotBlank:
+          message: 'Le champ numero de telephone est obligatoire.'
+      - Length:
+          min: 9
+          max: 14
+    firstname:
+      - NotBlank:
+          message: Ce champ est obligatoire.
+    lastname:
+      - NotBlank:
+          message: Ce champ est obligatoire.

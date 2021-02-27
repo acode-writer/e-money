@@ -1,0 +1,20 @@
+App\Entity\User:
+    attributes:
+        id:
+            groups: ['recharge_account:write']
+        email:
+            groups: ['create_user:write','block_user_agence:read']
+        roles:
+            groups: ['create_user:write','block_user_agence:read']
+        role:
+            groups: ['create_user:write']
+        firstname:
+            groups: ['create_user:write','block_user_agence:read']
+        lastname:
+            groups: ['create_user:write','block_user_agence:read']
+        phoneNumber:
+            groups: ['create_user:write','block_user_agence:read']
+        agence:
+            groups: ['create_user:write']
+        status:
+            groups: ['block_user_agence:read']

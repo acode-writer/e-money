@@ -1,1 +1,28 @@
-App\Entity\User: ~
+App\Entity\User:
+  attributes:
+    route_prefix: /admin
+    security: is_granted('ROLE_ADMIN_AGENCE')
+    security_message: Seul l'admin de l'agence peut accèder à cette ressource.
+    filters: ['get_by_id']
+  properties:
+      depositTransactions:
+          subresource:
+              resourceClass: App\Entity\Transaction
+              collection: true
+              path: /{id}/transactions
+      accounts:
+          subresource:
+              resourceClass: App\Entity\Account
+
+  collectionOperations:
+      get_users:
+          method: GET
+      create_user:
+          method: POST
+          denormalization_context:
+              groups: ['create_user:write']
+  itemOperations:
+      get_user:
+          method: GET
+
+
