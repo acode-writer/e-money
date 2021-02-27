@@ -29,3 +29,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    get_transaction_by_code:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { 'transfertCode': 'exact' } ]
+        tags: [ { name: 'api_platform.filter',id: 'get_transaction_by_code' } ]
+    get_client_by_nci:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { 'nicNumber': 'exact' } ]
+        tags: [ { name: 'api_platform.filter',id: 'get_client_by_nci' } ]
+    get_by_id:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { 'id': 'exact' } ]
+        tags: [ { name: 'api_platform.filter',id: 'get_by_id' } ]
+    get_transaction_by_date:
+        parent: 'api_platform.doctrine.orm.date_filter'
+        arguments: [ { 'depositAt': 'exact' , 'withdrewAt': ~} ]
+        tags: [ 'api_platform.filter' ]
