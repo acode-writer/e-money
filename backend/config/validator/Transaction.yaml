@@ -1,0 +1,14 @@
+App\Entity\Transaction:
+  properties:
+    amount:
+      - NotNull:
+          message: 'Ce champ est obligatore'
+      - Regex:
+          pattern: '/\d/'
+          match: true
+          message: 'Le montant de la transaction ne doit pas contenir de lettre.'
+      - GreaterThanOrEqual:
+          value: 1
+          message: '{{ value }} le montant minimal de transfert est de 1.'
+    depositClient:
+      - Valid: ~

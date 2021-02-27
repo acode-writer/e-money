@@ -33,19 +33,19 @@ class Transaction
     private $withdrewAt;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=15, unique=true)
      */
     private $transfertCode;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $frees;
+    private $fees;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $depositFrees;
+    private $depositFees;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -78,12 +78,12 @@ class Transaction
     private $withdrawal;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="deposit")
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="deposit", cascade={"persist"})
      */
     private $depositClient;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="withdrawal")
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="withdrawal", cascade={"persist"})
      */
     private $withdrawalClient;
 
@@ -140,26 +140,26 @@ class Transaction
         return $this;
     }
 
-    public function getFrees(): ?float
+    public function getFees(): ?float
     {
-        return $this->frees;
+        return $this->fees;
     }
 
-    public function setFrees(float $frees): self
+    public function setFees(float $fees): self
     {
-        $this->frees = $frees;
+        $this->fees = $fees;
 
         return $this;
     }
 
-    public function getDepositFrees(): ?float
+    public function getDepositFees(): ?float
     {
-        return $this->depositFrees;
+        return $this->depositFees;
     }
 
-    public function setDepositFrees(?float $depositFrees): self
+    public function setDepositFees(?float $depositFees): self
     {
-        $this->depositFrees = $depositFrees;
+        $this->depositFees = $depositFees;
 
         return $this;
     }

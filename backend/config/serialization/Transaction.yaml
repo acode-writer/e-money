@@ -1,0 +1,18 @@
+App\Entity\Transaction:
+  attributes:
+    id:
+      groups: ['get_agence_parts:read']
+    amount:
+      groups: ['make_deposit:write','get_agence_parts:read']
+    account:
+      groups: ['make_deposit:write']
+    depositClient:
+      groups: ['make_deposit:write']
+    withdrawalClient:
+      groups: ['make_withdrawal:write']
+    transfertCode:
+      groups: ['make_withdrawal:write','get_agence_parts:read']
+    depositFees:
+      groups: ['get_agence_parts:read']
+    withdrawalFees:
+      groups: ['get_agence_parts:read']

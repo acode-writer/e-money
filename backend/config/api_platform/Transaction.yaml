@@ -1,0 +1,32 @@
+App\Entity\Transaction:
+    attributes:
+        route_prefix: /user
+        security: is_granted('ROLE_USER_AGENCE')
+        security_message: Seul les admin ou utilisateurs de l'agence peuvent accèder à cette resource.
+        filters: ['get_transaction_by_date']
+    collectionOperations:
+        make_a_deposit:
+            method: POST
+            denormalization_context:
+                groups: ['make_deposit:write']
+        get_transaction_by_code:
+            method: GET
+            path: /transactions/code
+            filters: [ 'get_transaction_by_code' ]
+        get_transactions:
+            method: GET
+            path: /transactions
+    itemOperations:
+        make_withdrawal:
+            method: PUT
+            path: /transactions/{id}/retrait
+            requirements:
+                id: \d+
+            denormalization_context:
+                groups: [ 'make_withdrawal:write' ]
+        get_transaction:
+            method: GET
+            path: /transactions/{id}
+            requirements:
+                id: \d+
+
