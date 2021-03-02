@@ -3,12 +3,17 @@ App\Entity\Transaction:
         route_prefix: /user
         security: is_granted('ROLE_USER_AGENCE')
         security_message: Seul les admin ou utilisateurs de l'agence peuvent accèder à cette resource.
+        normalization_context:
+            groups: ['transaction:read']
         filters: ['get_transaction_by_date']
+
     collectionOperations:
         make_a_deposit:
             method: POST
             denormalization_context:
                 groups: ['make_deposit:write']
+            normalization_context:
+                groups: ['make_deposit:read']
         get_transaction_by_code:
             method: GET
             path: /transactions/code

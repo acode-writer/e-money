@@ -1,20 +1,20 @@
 App\Entity\User:
     attributes:
         id:
-            groups: ['recharge_account:write']
+            groups: ['recharge_account:write','user:read','agence:read']
         email:
-            groups: ['create_user:write','block_user_agence:read']
+            groups: ['create_user:write','block_user_agence:read','user:read','agence:read']
         roles:
-            groups: ['create_user:write','block_user_agence:read']
+            groups: ['create_user:write','block_user_agence:read','user:read','agence:read']
         role:
             groups: ['create_user:write']
         firstname:
-            groups: ['create_user:write','block_user_agence:read']
+            groups: ['create_user:write','block_user_agence:read','user:read','agence:read']
         lastname:
-            groups: ['create_user:write','block_user_agence:read']
+            groups: ['create_user:write','block_user_agence:read','user:read','agence:read']
         phoneNumber:
-            groups: ['create_user:write','block_user_agence:read']
+            groups: ['create_user:write','block_user_agence:read','user:read','agence:read']
         agence:
-            groups: ['create_user:write']
+            groups: ['create_user:write','user:read']
         status:
-            groups: ['block_user_agence:read']
+            groups: ['block_user_agence:read','agence:read']

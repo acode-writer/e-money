@@ -2,6 +2,8 @@ App\Entity\Account:
   attributes:
     route_prefix:
     filters: ['get_by_id']
+    normalization_context:
+      groups: ['account:read']
   properties:
     transactions:
       subresource:

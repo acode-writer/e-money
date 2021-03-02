@@ -11,3 +11,9 @@ App\Entity\Account:
       - NotNull:
           message: "Un compte est obligatoirement associé à une agence."
       - Valid: ~
+    withdrawalAgence:
+      - NotBlank:
+          message: Ce champ est obligatoire
+      - NotNull:
+          message: "Un compte est obligatoirement associé à une agence."
+      - Valid: ~

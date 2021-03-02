@@ -12,3 +12,5 @@ App\Entity\Transaction:
           message: '{{ value }} le montant minimal de transfert est de 1.'
     depositClient:
       - Valid: ~
+    withdrawalClient:
+      - Valid: ~

@@ -4,6 +4,8 @@ App\Entity\User:
     security: is_granted('ROLE_ADMIN_AGENCE')
     security_message: Seul l'admin de l'agence peut accèder à cette ressource.
     filters: ['get_by_id']
+    normalization_context:
+      groups: ['user:read']
   properties:
       depositTransactions:
           subresource:

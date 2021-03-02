@@ -87,6 +87,11 @@ class Transaction
      */
     private $withdrawalClient;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Account::class, inversedBy="withdrawals")
+     */
+    private $withdrawalAccount;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -256,6 +261,18 @@ class Transaction
     public function setWithdrawalClient(?Client $withdrawalClient): self
     {
         $this->withdrawalClient = $withdrawalClient;
+
+        return $this;
+    }
+
+    public function getWithdrawalAccount(): ?Account
+    {
+        return $this->withdrawalAccount;
+    }
+
+    public function setWithdrawalAccount(?Account $withdrawalAccount): self
+    {
+        $this->withdrawalAccount = $withdrawalAccount;
 
         return $this;
     }

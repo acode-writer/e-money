@@ -56,10 +56,21 @@ class Account
      */
     private $agence;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="withdrawalAccount")
+     */
+    private $withdrawals;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Agence::class, mappedBy="withdrawalAccount", cascade={"persist", "remove"})
+     */
+    private $withdrawalAgence;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->withdrawals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,6 +177,58 @@ class Account
     public function setAgence(?Agence $agence): self
     {
         $this->agence = $agence;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transaction[]
+     */
+    public function getWithdrawals(): Collection
+    {
+        return $this->withdrawals;
+    }
+
+    public function addWithdrawal(Transaction $withdrawal): self
+    {
+        if (!$this->withdrawals->contains($withdrawal)) {
+            $this->withdrawals[] = $withdrawal;
+            $withdrawal->setWithdrawalAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWithdrawal(Transaction $withdrawal): self
+    {
+        if ($this->withdrawals->removeElement($withdrawal)) {
+            // set the owning side to null (unless already changed)
+            if ($withdrawal->getWithdrawalAccount() === $this) {
+                $withdrawal->setWithdrawalAccount(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getWithdrawalAgence(): ?Agence
+    {
+        return $this->withdrawalAgence;
+    }
+
+    public function setWithdrawalAgence(?Agence $withdrawalAgence): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($withdrawalAgence === null && $this->withdrawalAgence !== null) {
+            $this->withdrawalAgence->setWithdrawalAccount(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($withdrawalAgence !== null && $withdrawalAgence->getWithdrawalAccount() !== $this) {
+            $withdrawalAgence->setWithdrawalAccount($this);
+        }
+
+        $this->withdrawalAgence = $withdrawalAgence;
 
         return $this;
     }

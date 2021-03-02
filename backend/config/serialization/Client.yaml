@@ -1,10 +1,10 @@
 App\Entity\Client:
     attributes:
         id:
-          groups: ['make_deposit:write','make_withdrawal:write']
+          groups: ['make_deposit:write','make_withdrawal:write','make_deposit:read','transaction:read']
         fullname:
-          groups: ['make_deposit:write','make_withdrawal:write']
+          groups: ['make_deposit:write','make_withdrawal:write','make_deposit:read','transaction:read']
         phoneNumber:
-          groups: ['make_deposit:write','make_withdrawal:write']
+          groups: ['make_deposit:write','make_withdrawal:write','make_deposit:read','transaction:read']
         nicNumber:
-          groups: ['make_deposit:write','make_withdrawal:write']
+          groups: ['make_deposit:write','make_withdrawal:write','make_deposit:read','transaction:read']

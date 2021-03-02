@@ -49,6 +49,11 @@ class Agence
      */
     private $account;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Account::class, inversedBy="withdrawalAgence", cascade={"persist", "remove"})
+     */
+    private $withdrawalAccount;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -155,6 +160,18 @@ class Agence
         }
 
         $this->account = $account;
+
+        return $this;
+    }
+
+    public function getWithdrawalAccount(): ?Account
+    {
+        return $this->withdrawalAccount;
+    }
+
+    public function setWithdrawalAccount(?Account $withdrawalAccount): self
+    {
+        $this->withdrawalAccount = $withdrawalAccount;
 
         return $this;
     }

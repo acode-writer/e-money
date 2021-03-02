@@ -1,5 +1,7 @@
 App\Entity\Agence:
     attributes:
+        normalization_context:
+            groups: ['agence:read']
         security: is_granted('ROLE_USER_AGENCE')
         security_message: Seul les admin ou utilisateurs de l'agence peuvent accèder à cette resource.
     properties:
