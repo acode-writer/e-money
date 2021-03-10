@@ -86,7 +86,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
-        $this->transactions = new ArrayCollection();
+//        $this->transactions = new ArrayCollection();
         $this->depositTransactions = new ArrayCollection();
         $this->withdrawalTransactions = new ArrayCollection();
     }

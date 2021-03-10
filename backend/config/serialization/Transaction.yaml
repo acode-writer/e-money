@@ -1,22 +1,26 @@
 App\Entity\Transaction:
   attributes:
     id:
-      groups: ['get_agence_parts:read','transaction:read','make_deposit:read','account:read']
+      groups: ['get_agence_parts:read','transaction:read','make_deposit:read','account:read','client:read']
     amount:
-      groups: ['make_deposit:write','transaction:read','get_agence_parts:read','make_deposit:read','account:read']
+      groups: ['make_deposit:write','transaction:read','client:read','get_agence_parts:read','make_deposit:read','account:read']
     account:
-      groups: ['make_deposit:write','transaction:read']
+      groups: ['make_deposit:write','transaction:read','client:read']
     depositClient:
       groups: ['make_deposit:write','transaction:read','make_deposit:read','account:read']
     withdrawalClient:
       groups: ['make_withdrawal:write','transaction:read','make_deposit:read', 'make_deposit:write','account:read']
     withdrawalAccount:
-      groups: ['make_deposit:write','transaction:read']
+      groups: ['make_deposit:write','transaction:read','client:read']
     transfertCode:
-      groups: ['make_withdrawal:write','get_agence_parts:read','make_deposit:read','account:read','transaction:read']
+      groups: ['make_withdrawal:write','get_agence_parts:read','client:read','make_deposit:read','account:read','transaction:read']
     fees:
-      groups: ['make_deposit:read','account:read','transaction:read']
+      groups: ['make_deposit:read','account:read','transaction:read','client:read']
     depositFees:
-      groups: ['get_agence_parts:read','transaction:read']
+      groups: ['get_agence_parts:read','transaction:read','client:read']
     withdrawalFees:
-      groups: ['get_agence_parts:read','transaction:read']
+      groups: ['get_agence_parts:read','transaction:read','client:read']
+    depositAt:
+      groups: ['make_deposit:read','transaction:read','client:read']
+    withdrewAt:
+      groups: ['client:read']

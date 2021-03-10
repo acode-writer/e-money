@@ -1,7 +1,7 @@
 App\Entity\Client:
-  constraints:
-    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-        fields: [phoneNumber]
+  #constraints:
+    #- Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        #fields: [phoneNumber]
   properties:
     fullname:
       - NotBlank:

@@ -3,13 +3,16 @@ App\Entity\Transaction:
     amount:
       - NotNull:
           message: 'Ce champ est obligatore'
+          groups: ['make_withdrawal']
       - Regex:
           pattern: '/\d/'
           match: true
           message: 'Le montant de la transaction ne doit pas contenir de lettre.'
+          groups: ['make_withdrawal']
       - GreaterThanOrEqual:
           value: 1
           message: '{{ value }} le montant minimal de transfert est de 1.'
+          groups: ['make_withdrawal']
     depositClient:
       - Valid: ~
     withdrawalClient:

@@ -26,7 +26,7 @@ App\Entity\Account:
   itemOperations:
     get_account:
       method: GET
-      path: /admin/accounts/{id}
+      path: /accounts/{id}
       requirements:
         id: \d+
     recharge_account:

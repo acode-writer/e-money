@@ -27,18 +27,14 @@ class TransactionDataPersister implements ContextAwareDataPersisterInterface
 
     public function persist($data, array $context = [])
     {
-
-        if (isset($context["collection_operation_name"]) && $context["collection_operation_name"] == "make_a_deposit" ){
-            $data = $this->transactionService->makeDepositTransaction($data);
-            if ($data instanceof Transaction){
-                $this->manager->persist($data);
-                $this->manager->flush();
-            }
-        }elseif (isset($context['item_operation_name']) && $context['item_operation_name'] == "make_withdrawal"){
+//        if (isset($context["collection_operation_name"]) && $context["collection_operation_name"] == "make_a_deposit" ){
+//            $data = $this->transactionService->makeDepositTransaction($data);
+//            $this->manager->persist($data);
+//            $this->manager->flush();
+//        }
+       if (isset($context['item_operation_name']) && $context['item_operation_name'] == "make_withdrawal"){
             $data = $this->transactionService->makeWithdrawalTransaction($data);
-            if ($data instanceof Transaction){
-                $this->manager->flush();
-            }
+            $this->manager->flush();
         }
         return $data;
     }

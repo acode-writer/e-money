@@ -1,16 +1,16 @@
 App\Entity\Agence:
     attributes:
         id:
-            groups: ['get_agence_parts:read','block_user_agence:read','create_account:read','user:read','agence:read','account:read']
+            groups: ['get_agence_parts:read','block_user_agence:read','create_account:read','user:read','agence:read','account:read','get_user:read']
         phoneNumber:
-            groups: ['create_user:write','get_agence_parts:read','create_account:write','agence:read','create_account:read','user:read','account:read']
+            groups: ['create_user:write','get_agence_parts:read','create_account:write','agence:read','create_account:read','user:read','account:read','get_user:read']
         address:
-            groups: ['create_user:write','get_agence_parts:read','create_account:write','agence:read','create_account:read','user:read','account:read']
+            groups: ['create_user:write','get_agence_parts:read','create_account:write','agence:read','create_account:read','user:read','account:read','get_user:read']
         latitude:
-            groups: ['create_user:write','get_agence_parts:read','create_account:write','agence:read','create_account:read','user:read','account:read']
+            groups: ['create_user:write','get_agence_parts:read','create_account:write','agence:read','create_account:read','user:read','account:read','get_user:read']
         longitude:
-            groups: ['create_user:write','get_agence_parts:read','create_account:write','agence:read','create_account:read','user:read','account:read']
+            groups: ['create_user:write','get_agence_parts:read','create_account:write','agence:read','create_account:read','user:read','account:read','get_user:read']
         account:
-            groups: ['get_agence_parts:read','agence:read']
+            groups: ['get_agence_parts:read','agence:read','get_user:read']
         users:
             groups: ['block_user_agence:read','agence:read']

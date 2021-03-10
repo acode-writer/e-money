@@ -1,9 +1,6 @@
 App\Entity\User:
   attributes:
     route_prefix: /admin
-    security: is_granted('ROLE_ADMIN_AGENCE')
-    security_message: Seul l'admin de l'agence peut accèder à cette ressource.
-    filters: ['get_by_id']
     normalization_context:
       groups: ['user:read']
   properties:
@@ -15,7 +12,6 @@ App\Entity\User:
       accounts:
           subresource:
               resourceClass: App\Entity\Account
-
   collectionOperations:
       get_users:
           method: GET
@@ -26,5 +22,9 @@ App\Entity\User:
   itemOperations:
       get_user:
           method: GET
+          normalization_context:
+            groups: [ 'get_user:read' ]
+          #security: is_granted('ROLE_USER_AGENCE')
+          #security_message: Seul les admin ou utilisateurs de l'agence peuvent accèder à cette resource.
 
 

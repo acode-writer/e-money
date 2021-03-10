@@ -1,4 +1,13 @@
 api_login_check:
   path: /api/login_check
 
-
+get_client_by_nic:
+  path: /api/user/client/nci/{nic}
+  methods: [GET]
+  defaults:
+    _controller: App\Controller\ClientController::getClientByNic
+#make_deposit:
+#  path: /api/user/transactions
+#  methods: [POST]
+#  defaults:
+#    _controller: App\Controller\ClientController::makeDeposit

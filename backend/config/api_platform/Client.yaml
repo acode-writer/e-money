@@ -1,8 +1,10 @@
 App\Entity\Client:
     attributes:
         route_prefix: /user
-    collectionOperations:
-        get_client_by_nci:
-            method: GET
-            path: /client/nci
-            filters: ['get_client_by_nci']
+        normalization_context:
+            groups: ['client:read']
+#    collectionOperations:
+#        get_client_by_nci:
+#            method: GET
+#            path: /client/nci
+#            filters: ['get_client_by_nci']
