@@ -1,0 +1,16 @@
+#avatar {
+  border: 2px solid #07AEEF;
+  width: 50px;
+  img {
+    width: 100%;
+  }
+}
+.no-scroll {
+  overflow: hidden;
+}
+#logo {
+  width: 50px;
+}
+ion-item {
+  --border-color: red;
+}
