@@ -42,31 +42,33 @@ class TransactionService
             ->setTransfertCode($code)
             ->setDepositAt($depositAt)
             ->setStateFees($stateFees);
-        $errors = $this->validator->validate($data);
-        return count($errors) ? $errors : $data;
+        if ($data->getDepositClient()->getId()){
+            $data->getDepositClient()->addDeposit($data);
+        }
+        return  $data;
     }
 
     public function makeWithdrawalTransaction($data)
     {
         $transfertCode = $data->getTransfertCode();
-        $transaction = $this->transactionRepository->findOneBy(["transfertCode" => $transfertCode]);
-        if ($transaction){
-            $fees = $transaction->getFees();
-            $stateFees = $transaction->getStateFees();
-            $systemFees = $transaction->getSytemFees();
-            $rest = $fees - ($stateFees + $systemFees);
-            $withdrawalFees = $this->calculatePerPercent($rest,20);
-            $withdrawal = $this->tokenStorage->getToken()->getUser();
-            $accountBalance = $transaction->getAccount()->getBalance();
-            $amount = $transaction->getAmount();
-            $data->setWithdrawal($withdrawal)
-                ->setWithdrawalFees($withdrawalFees)
-                ->setWithdrewAt(new \DateTime())
-                ->setAmount(0)
-                ->getAccount()->setBalance($accountBalance + $amount);
-            $errors = $this->validator->validate($data);
-            return count($errors) ? $errors : $data;
+        $fees = $data->getFees();
+        $stateFees = $data->getStateFees();
+        $systemFees = $data->getSytemFees();
+        $rest = $fees - ($stateFees + $systemFees);
+        $withdrawalFees = $this->calculatePerPercent($rest,20);
+        $withdrawal = $this->tokenStorage->getToken()->getUser();
+        $account = $data->getAccount();
+        $accountBalance = $account->getBalance();
+        $amount = $data->getAmount();
+        $data->setWithdrawal($withdrawal)
+            ->setWithdrawalFees($withdrawalFees)
+            ->setWithdrewAt(new \DateTime())
+            ->setAmount(0)
+            ->getAccount()->setBalance($accountBalance + $amount);
+        if ($data->getWithdrawalClient()->getId()){
+            $data->getWithdrawalClient()->addWithdrawal($data);
         }
+        return $data;
     }
 
     public function genearateTransactionCode()
