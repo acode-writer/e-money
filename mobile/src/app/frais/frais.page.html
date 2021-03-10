@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>frais</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="onClick()">
+    <ion-item>
+      <ion-label position="floating">Type de transaction</ion-label>
+      <ion-select formControlName="type">
+        <ion-select-option >Depot</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngFor="let error of errorMessage.type">
+      <ng-container *ngIf="type.hasError(error.type) && (type.dirty || type.touched)">
+        <small class="error-message"> {{error.message}} </small>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="floating">Montant</ion-label>
+      <ion-input type="number" formControlName="amount"></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessage.amount">
+      <ng-container *ngIf="amount.hasError(error.type) && (amount.dirty || amount.touched)">
+        <small class="error-message"> {{error.message}} </small>
+      </ng-container>
+    </div>
+    <div>
+      <ion-button color="danger"  id="calcul" type="submit">Calculer</ion-button>
+    </div>
+  </form>
+</ion-content>
