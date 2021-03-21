@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   api: 'http://localhost:8000/api',
-  token: 'ion-money-sa-token'
+  token: 'ion-money-sa-token',
+  connectedUser: 'ion-connected-user'
 };
 
 /*

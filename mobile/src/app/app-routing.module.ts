@@ -35,6 +35,14 @@ const routes: Routes = [
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   },
+  {
+    path: 'transaction',
+    loadChildren: () => import('./transaction/transaction.module').then( m => m.TransactionPageModule)
+  },
+  {
+    path: 'commission',
+    loadChildren: () => import('./commission/commission.module').then( m => m.CommissionPageModule)
+  },
 ];
 
 @NgModule({
