@@ -21,7 +21,6 @@ export class FraisPage implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.isAdmin = this.interfaceService.isAdmin();
   }
   initForm() {
     this.form = this.fb.group({
@@ -37,13 +36,21 @@ export class FraisPage implements OnInit {
   }
 
   async onClick(){
-      console.log(this.form.value);
     if (this.form.valid) {
       const montant = +this.amount.value;
+      const type = this.type.value;
       const fees = this.feesService.calculateFees(montant);
+      let value = 0;
+      if (type == 'frais'){
+        value = fees;
+      }else if (type == 'depot'){
+        value = fees * 0.1;
+      }else if (type == 'retrait'){
+        value = fees * 0.2;
+      }
       await this.alertCtrl.create({
         header: 'Calculateur',
-        message: `Pour un transaction de ${montant}, le frais est égal à: <br/> <span class="ion-text-center"><strong>${fees}</strong></span>`,
+        message: `Pour un transaction de ${montant}, le frais est égal à: <br/> <span class="ion-text-center"><strong>${value}</strong></span>`,
         buttons: [
           { text: 'Retour', cssClass: 'ion-justify-content-center'}
         ]

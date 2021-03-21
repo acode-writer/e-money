@@ -1,15 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>frais</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div id="card">
+    <div id="card-header">
+      <ion-button fill="clear" id="home" [routerLink]="['/tabs']">
+        <ion-icon name="home" size="large"></ion-icon>
+      </ion-button>
+      <div id="logo">
+        <img src="assets/images/logo-money-sa.png" alt="">
+      </div>
+    </div>
+    <div id="card-text">
+      <span><ion-icon src="assets/icon/frais-blue.svg"></ion-icon>Calculateur de frais</span>
+    </div>
+  </div>
   <form [formGroup]="form" (ngSubmit)="onClick()">
     <ion-item>
       <ion-label position="floating">Type de transaction</ion-label>
-      <ion-select formControlName="type">
-        <ion-select-option >Depot</ion-select-option>
+      <ion-select formControlName="type" value="frais">
+        <ion-select-option value="frais">Frais</ion-select-option>
+        <ion-select-option value="depot">Depot</ion-select-option>
+        <ion-select-option value="retrait">Retrait</ion-select-option>
       </ion-select>
     </ion-item>
     <div *ngFor="let error of errorMessage.type">
@@ -27,7 +36,7 @@
       </ng-container>
     </div>
     <div>
-      <ion-button color="danger"  id="calcul" type="submit">Calculer</ion-button>
+      <ion-button id="calcul" type="submit">Calculer</ion-button>
     </div>
   </form>
 </ion-content>
