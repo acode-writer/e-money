@@ -1,15 +1,91 @@
-#avatar {
-  border: 2px solid #07AEEF;
-  width: 50px;
-  img {
-    width: 100%;
+$container-bg-color: #E5E5E5;
+$solde-color: #07AEEF;
+#container {
+  box-sizing: border-box;
+  height: 40%;
+  background-color: $container-bg-color;
+  #menu {
+    display: flex;
+    position: relative;
+    top: 50px;
+    padding: 0 20px;
+    justify-content: space-between;
+    #logo {
+      width: 50px;
+    }
+    #avatar {
+      box-sizing: border-box;
+      width: 50px;
+      border: 2px solid $solde-color;
+      border-radius: 50%;
+      img {
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+  }
+  #solde-card {
+    position: relative;
+    box-sizing: border-box;
+    width: 90%;
+    margin: auto;
+    top: 80px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: whitesmoke;
+    border-radius: 8px;
+    border-bottom: solid 2px $solde-color;
+    #solde-value {
+      padding-top: 15px;
+      span {
+        color: $solde-color;
+        font-size: 2em;
+        margin-right: 5px;
+      }
+      #eye {
+        float: right;
+        padding-right: 10px;
+        margin-top: -10px;
+        color: $solde-color;
+      }
+    }
   }
 }
-.no-scroll {
-  overflow: hidden;
-}
-#logo {
-  width: 50px;
+.my-custom-menu {
+  --width: 30%;
+  box-sizing: border-box;
+  ion-content{
+    box-sizing: border-box;
+    padding: 20px;
+    --background:  #51BFD0;
+  }
+  ion-list {
+    margin-top: 80px;
+    box-sizing: border-box;
+    background-color: #51BFD0;
+    padding: 20px;
+    ion-item {
+      --background:  #51BFD0;
+      margin-top: 20px;
+      color: whitesmoke;
+      --border-color: whitesmoke;
+      width: 180px;
+      ion-icon {
+        color: whitesmoke;
+        margin-right: 10px;
+      }
+    }
+  }
+  #menu-logout {
+    --background:  #51BFD0;
+    margin-top: 20px;
+    --border-color: whitesmoke;
+    color: whitesmoke;
+    width: 250px;
+    padding: 20px;
+    position: absolute;
+    bottom: 100px;
+  }
 }
 ion-item {
   --border-color: red;

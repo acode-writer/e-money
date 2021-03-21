@@ -1,65 +1,81 @@
-<ion-header translucent>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"></ion-menu-button>
-    </ion-buttons>
-    <ion-buttons size="large" class="ion-justify-content-center">
-      <ion-img src="assets/images/logo-money-sa.png" id="logo"></ion-img>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-avatar  id="avatar">
-        <img src="assets/images/logo-money-sa.png" >
-      </ion-avatar>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 <ion-content fullscreen>
-  <ion-card>
-    <ion-card-content>
-      <ion-label>Mon solde disponible</ion-label>
-      <br>
-      <ion-label>
-        {{interfaceService.connectedUser?.agence?.account?.balance || 0}} FCFA
-      </ion-label>
-    </ion-card-content>
-  </ion-card>
-  <ion-infinite-scroll>
-    <ion-infinite-scroll-content>
-      <ion-item button detail="false" [routerLink]="['/depot']">
-        <ion-icon src="assets/icon/depot.svg"></ion-icon>
-        <ion-label class="ion-padding-horizontal">Dépôt</ion-label>
-        <ion-icon src="assets/icon/fleche.svg"></ion-icon>
+  <ion-menu side="start" menuId="custom" contentId="main" class="my-custom-menu" style="background-color: #51BFD0">
+    <ion-content>
+      <ion-list lines="inset">
+        <ion-item button detail="false" [routerLink]="['/tabs']">
+          <ion-icon src="assets/icon/home-white.svg" ></ion-icon>
+          <ion-label> Home</ion-label>
+        </ion-item>
+        <ion-item button detail="false" [routerLink]="['/tabs/tab2']">
+          <ion-icon src="assets/icon/transaction-white.svg"></ion-icon>
+          <ion-label> Transactions</ion-label>
+        </ion-item>
+        <ion-item  *ngIf="interfaceService._isAdmin | async" button detail="false" [routerLink]="['/tabs/tab4']">
+          <ion-icon src="assets/icon/commission-white.svg"></ion-icon>
+          <ion-label> Commissions</ion-label>
+        </ion-item>
+        <ion-item button detail="false" [routerLink]="['/tabs/tab3']">
+          <ion-icon src="assets/icon/calculateur-white.svg"></ion-icon>
+          <ion-label> Calculateur</ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-item button detail="false" id="menu-logout" (click)="onLogout()">
+        <ion-label> Déconnexion</ion-label>
+        <ion-icon name="arrow-forward-outline" color="light"></ion-icon>
       </ion-item>
-      <ion-item button detail="false" [routerLink]="['/retrait']">
-        <ion-icon src="assets/icon/retrait.svg"></ion-icon>
-        <ion-label class="ion-padding-horizontal">Retrait</ion-label>
-        <ion-icon src="assets/icon/fleche.svg"></ion-icon>
-      </ion-item>
-      <ion-item button detail="false">
-        <ion-icon src="assets/icon/transaction.svg"></ion-icon>
-        <ion-label class="ion-padding-horizontal">Mes transactions</ion-label>
-        <ion-icon src="assets/icon/fleche.svg"></ion-icon>
-      </ion-item>
-      <ion-item *ngIf="isAdmin" button detail="false">
-        <ion-icon src="assets/icon/toute-transaction.svg"></ion-icon>
-        <ion-label class="ion-padding-horizontal">Toutes les transactions</ion-label>
-        <ion-icon src="assets/icon/fleche.svg"></ion-icon>
-      </ion-item>
-      <ion-item *ngIf="isAdmin" button detail="false">
-        <ion-icon src="assets/icon/commission.svg"></ion-icon>
-        <ion-label class="ion-padding-horizontal">Mes commissions</ion-label>
-        <ion-icon src="assets/icon/fleche.svg"></ion-icon>
-      </ion-item>
-      <ion-item button detail="false">
-        <ion-icon src="assets/icon/frais.svg"></ion-icon>
-        <ion-label class="ion-padding-horizontal">Calculateur de frais</ion-label>
-        <ion-icon src="assets/icon/fleche.svg"></ion-icon>
-      </ion-item>
-      <ion-item button detail="false" [routerLink]="['/login']">
-        <ion-icon src="assets/icon/deconnexion.svg"></ion-icon>
-        <ion-label class="ion-padding-horizontal">Déconnexion</ion-label>
-      </ion-item>
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main"></ion-router-outlet>
+  <div id="container">
+    <div id="menu">
+      <ion-menu-button autoHide="false" menu="custom"></ion-menu-button>
+      <div id="logo">
+        <img src="assets/images/logo-money-sa.png" alt="" id="logo-img">
+      </div>
+      <div id="avatar">
+        <img src="assets/images/logo-money-sa.png" alt="">
+      </div>
+    </div>
+    <div id="solde-card">
+      <span id="solde-text">Mon solde disponible</span>
+      <p id="solde-value"><span>{{interfaceService.solde | async}}</span> FCFA <ion-icon name="eye-off-outline" id="eye" size="large"></ion-icon></p>
+      <span id="solde-update">Mise à jour le 22/O2/21 à 13:15</span>
+    </div>
+  </div>
+  <ion-list>
+    <ion-item button detail="false" [routerLink]="['/depot']">
+      <ion-icon src="assets/icon/depot.svg"></ion-icon>
+      <ion-label class="ion-padding-horizontal">Dépôt</ion-label>
+      <ion-icon src="assets/icon/fleche.svg"></ion-icon>
+    </ion-item>
+    <ion-item button detail="false" [routerLink]="['/retrait']">
+      <ion-icon src="assets/icon/retrait.svg"></ion-icon>
+      <ion-label class="ion-padding-horizontal">Retrait</ion-label>
+      <ion-icon src="assets/icon/fleche.svg"></ion-icon>
+    </ion-item>
+    <ion-item button detail="false" [routerLink]="['/tabs/tab2']">
+      <ion-icon src="assets/icon/transaction.svg"></ion-icon>
+      <ion-label class="ion-padding-horizontal">Mes transactions</ion-label>
+      <ion-icon src="assets/icon/fleche.svg"></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="interfaceService._isAdmin | async" button detail="false" [routerLink]="['/tabs/tab2']">
+      <ion-icon src="assets/icon/toute-transaction.svg"></ion-icon>
+      <ion-label class="ion-padding-horizontal">Toutes les transactions</ion-label>
+      <ion-icon src="assets/icon/fleche.svg"></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="interfaceService._isAdmin | async" button detail="false" [routerLink]="['/tabs/tab4']">
+      <ion-icon src="assets/icon/commission.svg"></ion-icon>
+      <ion-label class="ion-padding-horizontal">Mes commissions</ion-label>
+      <ion-icon src="assets/icon/fleche.svg"></ion-icon>
+    </ion-item>
+    <ion-item button detail="false" [routerLink]="['/tabs/tab3']">
+      <ion-icon src="assets/icon/frais.svg"></ion-icon>
+      <ion-label class="ion-padding-horizontal">Calculateur de frais</ion-label>
+      <ion-icon src="assets/icon/fleche.svg"></ion-icon>
+    </ion-item>
+    <ion-item button detail="false" (click)="onLogout()">
+      <ion-icon src="assets/icon/deconnexion.svg"></ion-icon>
+      <ion-label class="ion-padding-horizontal">Déconnexion</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
