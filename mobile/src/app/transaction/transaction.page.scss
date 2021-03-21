@@ -1,0 +1,94 @@
+
+$total-radius: 5px;
+$blue-color: #07AEEF;
+#card {
+  height: 26%;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0 0 10px 10px;
+  background-color: whitesmoke;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+  margin-bottom: 10px;
+  #card-header {
+    display: flex;
+    position: relative;
+    top: 50px;
+    padding-left: 20px;
+    #home {
+      margin-right: 60px;
+      ion-icon {
+        color: $blue-color;
+      }
+    }
+    #logo {
+      width: 70px;
+      height: auto;
+    }
+  }
+  #card-text {
+    width: 180px;
+    margin: auto;
+    font-size: 1.3em;
+    position: relative;
+    top: 80px;
+    border-bottom: solid 3px $blue-color;
+    text-align: center;
+    ion-icon {
+      margin-right: 5px;
+    }
+  }
+  #admin-card-text {
+    display: flex;
+    ion-button {
+      font-size: .9em;
+      position: relative;
+      top: 67px;
+      border-bottom: $blue-color 3px solid;
+    }
+  }
+}
+table {
+  margin-top: 40px;
+  box-sizing: border-box;
+  width: 100%;
+  thead {
+    padding: 10px;
+    font-size: 1em;
+    tr {
+      text-align: center;
+    }
+  }
+  tbody {
+    box-sizing: border-box;
+    tr {
+      font-size: 1.2em;
+      height: 40px;
+      td {
+        text-align: center;
+      }
+    }
+  }
+}
+#total {
+  border: solid 2px red;
+  box-sizing: border-box;
+  font-size: 1.2em;
+  margin-top: 20px;
+  border-radius: 20px;
+  width: 55%;
+  float: right;
+  #total-text {
+    display: inline-block;
+    background-color: #FA4A0C;
+    width: 40%;
+    padding: 5px;
+    border-radius: 20px;
+    color: whitesmoke;
+    font-weight: bold;
+  }
+  #total-value {
+    display: inline-block;
+    width: 60%;
+    text-align: center;
+  }
+}
