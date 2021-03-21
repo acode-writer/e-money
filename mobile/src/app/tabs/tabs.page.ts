@@ -8,10 +8,11 @@ import {InterfaceService} from "../services/interface/interface.service";
 })
 export class TabsPage implements OnInit {
   public isAdmin = false;
-  constructor(private interfaceService: InterfaceService) { }
+  constructor(public interfaceService: InterfaceService) { }
 
-  ngOnInit() {
-    this.isAdmin = this.interfaceService.isAdmin();
+  async ngOnInit() {
+    await this.interfaceService.getConnectedUser();
+    // this.isAdmin = this.interfaceService.isAdmin();
   }
 
 }

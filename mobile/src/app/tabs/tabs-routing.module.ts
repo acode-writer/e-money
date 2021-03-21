@@ -14,11 +14,15 @@ const routes: Routes = [
       },
       {
         path: 'tab2',
-        loadChildren: () => import('../depot/depot.module').then(m => m.DepotPageModule)
+        loadChildren: () => import('../transaction/transaction.module').then(m => m.TransactionPageModule)
       },
       {
         path: 'tab3',
         loadChildren: () => import('../frais/frais.module').then(m => m.FraisPageModule)
+      },
+      {
+        path: 'tab4',
+        loadChildren: () => import('../commission/commission.module').then(m => m.CommissionPageModule)
       },
       {
         path: '',

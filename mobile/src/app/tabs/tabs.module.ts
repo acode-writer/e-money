@@ -9,15 +9,19 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 import { TabsPage } from './tabs.page';
 import {FraisService} from "../services/frais.service";
 import {InterfaceService} from "../services/interface/interface.service";
+import {LoginService} from "../services/login/login.service";
+import {IonicStorageModule} from "@ionic/storage";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TabsPageRoutingModule
+    TabsPageRoutingModule,
   ],
   declarations: [TabsPage],
-  providers: [FraisService,InterfaceService]
+  providers: [
+    FraisService,
+  ]
 })
 export class TabsPageModule {}
