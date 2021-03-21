@@ -1,5 +1,6 @@
 import {ClientInterface} from "./client.interface";
 import {AccountInterface} from "./account.interface";
+import {UserInterface} from "./user.interface";
 
 export interface TransactionInterface {
   id: number
@@ -13,4 +14,7 @@ export interface TransactionInterface {
   withdrawalClient: ClientInterface;
   withdrawalAccount: AccountInterface;
   depositAt: string;
+  withdrewAt: string;
+  deposit: UserInterface;
+  withdrawal: UserInterface;
 }

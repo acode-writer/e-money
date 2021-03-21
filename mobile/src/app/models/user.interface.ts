@@ -5,7 +5,8 @@ export interface UserInterface {
   firstname: string;
   lastname: string;
   email: string;
-  phoneNumber: string
+  phoneNumber: string;
   status: boolean;
   agence: AgenceInterface;
+  roles: [string];
 }
