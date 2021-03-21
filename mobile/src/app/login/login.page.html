@@ -1,13 +1,11 @@
-<ion-header >
-  <ion-toolbar>
+
+<ion-content class="padding" >
+  <div class="container">
     <div id="logo-continer">
       <img src="assets/images/logo-money-sa.png" class="login-logo" alt="Logo moneySA">
     </div>
-    <h4 class="ion-text-center">Login</h4>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="padding">
+    <h4 class="container-text">Login</h4>
+  </div>
   <form method="post" [formGroup]="form" (ngSubmit)="onSubmit()">
     <ion-list>
       <ion-item>
@@ -31,10 +29,10 @@
           <small class="error-message">{{invalid}}</small>
         </ng-container>
       </div>
-      <ion-item lines="none">
+      <ion-item lines="none" class="ion-margin-top">
         <ion-button fill="clear" >Mot de passe oublié ?</ion-button>
       </ion-item>
     </ion-list>
-    <ion-button type="submit" shape="round" expand="block" [disabled]="!form.valid">Se connecter</ion-button>
+    <ion-button type="submit"  expand="block" [disabled]="!form.valid" id="submit-btn">Se connecter</ion-button>
   </form>
 </ion-content>

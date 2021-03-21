@@ -10,6 +10,8 @@ import { LoginPage } from './login.page';
 import {HttpClientModule} from "@angular/common/http";
 import {LoginService} from "../services/login/login.service";
 import {IonicStorageModule} from "@ionic/storage";
+import {InterfaceService} from "../services/interface/interface.service";
+import {AuthInterceptorProvider} from "../interceptors/auth.interceptor";
 
 @NgModule({
   imports: [
@@ -19,8 +21,12 @@ import {IonicStorageModule} from "@ionic/storage";
     LoginPageRoutingModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot(),
   ],
   declarations: [LoginPage],
-  providers: [LoginService]
+  providers: [
+    LoginService,
+    InterfaceService
+  ]
 })
 export class LoginPageModule {}

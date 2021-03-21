@@ -4,6 +4,8 @@ import {LoginService} from "../services/login/login.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
+import {JwtHelperService} from "@auth0/angular-jwt";
+import {InterfaceService} from "../services/interface/interface.service";
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,8 @@ export class LoginPage implements OnInit {
       {type: 'required', message: 'Ce champs password est obligatoire'},
     ]
   }
-  constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router ) { }
+  constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router,
+              private interfaceService: InterfaceService) { }
 
   ngOnInit() {
     this.initFrom();
@@ -30,7 +33,11 @@ export class LoginPage implements OnInit {
 
   initFrom() {
     this.form = this.fb.group({
-      username: ["",[Validators.required,Validators.pattern('^([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})')]],
+      username: ["",[
+        Validators.required,
+        Validators.pattern('^([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})')
+        ]
+      ],
       password: ["",[Validators.required]]
     })
   }
@@ -40,15 +47,16 @@ export class LoginPage implements OnInit {
   get password() {
     return this.form.get("password");
   }
-  onSubmit(){
+  async onSubmit(){
     if (this.form.valid){
       const data = this.form.value;
       this.loginService.login(data).subscribe(
         (response: {token}) => {
           const token = response.token;
-          localStorage.setItem(environment.token,token);
-          /*this.loginService.setData(environment.token,token);*/
-          this.router.navigate(["/tabs"]);
+          const helper = new JwtHelperService();
+          const payload = helper.decodeToken(token);
+          this.interfaceService.tokenPayload = payload;
+          this.loginService.setData(environment.token,token).then(() => this.router.navigateByUrl('/tabs'));
         },
         (error: HttpErrorResponse) => {
           if (error.status == 401){
