@@ -41,14 +41,14 @@ export class DepotPage implements OnInit, OnDestroy {
   public depositClientSubscription: Subscription;
   public withdrawalClient: ClientInterface;
   public withdrawalClientSubscription: Subscription;
+  private homePath = '/tabs';
   constructor(private fb: FormBuilder, private interfaceService: InterfaceService,
               private depotService: DepotService, private feesService: FraisService,
               private alertCtrl: AlertController, private router: Router) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.initForm();
-    const payload = this.interfaceService.getTokenPayload();
-    this.interfaceService.getConnectedUser(payload.id);
+    await this.interfaceService.getConnectedUser();
   }
   initForm(){
     this.form = this.fb.group({
@@ -74,11 +74,6 @@ export class DepotPage implements OnInit, OnDestroy {
         lastname: ['']
       }),
       withdrawalClient: this.fb.group({
-        nicNumber: ['',[
-          Validators.minLength(13),
-          Validators.maxLength(13),
-          Validators.pattern('[0-9]{13,13}')
-        ]],
         phoneNumber: ['',[
           Validators.required, Validators.pattern('^(\\+221){0,1}(33|70|76|77|78){1}[0-9]{7}')
         ]],
@@ -109,10 +104,6 @@ export class DepotPage implements OnInit, OnDestroy {
   get _fullname() {
     return this.form.get('withdrawalClient.fullname');
   }
-
-  get _nicNumber(){
-    return this.form.get('withdrawalClient.nicNumber');
-  }
   get _phoneNumber(){
     return this.form.get('withdrawalClient.phoneNumber');
   }
@@ -138,29 +129,37 @@ export class DepotPage implements OnInit, OnDestroy {
   findDepositClientByNci(nicNumber: any){
     this.depositClientSubscription = this.interfaceService.getClientByNci(nicNumber.value).subscribe(
       (response: ClientInterface) => {
-        this.depositClient = response;
-        const name = this.depositClient?.fullname.split(' ');
-        this.fullname.setValue(this.depositClient?.fullname || '');
-        this.phoneNumber.setValue(this.depositClient?.phoneNumber || '');
-        this.lastname.setValue(name[0] || "");
-        this.firstname.setValue(name[1] || '');
+        if (response){
+          this.depositClient = response;
+          const name = this.depositClient?.fullname.split(' ');
+          this.fullname.setValue(this.depositClient?.fullname || '');
+          this.phoneNumber.setValue(this.depositClient?.phoneNumber || '');
+          this.lastname.setValue(name[0] || "");
+          this.firstname.setValue(name[1] || '');
+        }
+
       }
     );
   }
-  findWithdrawalClient(nicNumber: any) {
-    this.withdrawalClientSubscription = this.interfaceService.getClientByNci(nicNumber.value).subscribe(
-      (response: ClientInterface) => {
-        this.withdrawalClient = response;
-        const name = this.withdrawalClient?.fullname.split(' ');
-        this._fullname.setValue(this.withdrawalClient?.fullname || '');
-        this._phoneNumber.setValue(this.withdrawalClient?.phoneNumber || '');
-        this._lastname.setValue(name[0] || "");
-        this._firstname.setValue(name[1] || '');
-      }
-    );
+  findWithdrawalClient(phone: any) {
+    if (phone.value){
+      this.withdrawalClientSubscription = this.interfaceService.getClientByPhoneNumber(phone.value).subscribe(
+        (response: ClientInterface) => {
+          if (response){
+            this.withdrawalClient = response;
+            const name = this.withdrawalClient?.fullname.split(' ');
+            this._fullname.setValue(this.withdrawalClient?.fullname || '');
+            this._phoneNumber.setValue(this.withdrawalClient?.phoneNumber || '');
+            this._lastname.setValue(name[0] || "");
+            this._firstname.setValue(name[1] || '');
+            console.log(response);
+          }
+        }
+      );
+    }
   }
   async onSubmit(){
-    const id = this.interfaceService.connectedUser?.agence?.account.id;
+    const id = this.interfaceService.connectedUser.value?.agence?.account?.id;
     this.form.get('account.id').setValue(id);
     const amount = +this.amount.value;
     const _fullname = this._firstname.value + ' ' + this._lastname.value;
@@ -201,21 +200,19 @@ export class DepotPage implements OnInit, OnDestroy {
           text: 'Annuler',
           handler: () => {
             this.initForm();
-            this.router.navigate(['/interface']);
+            this.router.navigateByUrl(this.homePath);
           }},
         {
           text: 'Confirmer',
           handler: () => {
             const data = this.form.value;
-            if (this.depositClient.id){
-              data.depositClient.id = this.depositClient.id;
-            }
-            if (this.withdrawalClient.id){
-              data.withdrawalClient.id = this.withdrawalClient.id;
-            }
+            data.depositClient.id = this.depositClient?.id;
+            data.withdrawalClient.id = this.withdrawalClient?.id;
             this.depositSubscription = this.depotService.makeDeposit(data).subscribe(
               (response) => {
-                response = response['hydra:member'][0];
+                response = response;
+                const solde = response.account.balance;
+                this.interfaceService.solde.next(solde);
                 this.displayTransactionCode(response);
                 this.initForm();
               },
@@ -238,10 +235,12 @@ export class DepotPage implements OnInit, OnDestroy {
         <p>${data.transfertCode}</p>`,
       buttons: [
         {
-          text: 'transferer'
+          text: 'transferer',
+          handler: value => this.router.navigateByUrl(this.homePath)
         },
         {
-          text: 'SMS'
+          text: 'SMS',
+          handler: value => this.router.navigateByUrl(this.homePath)
         }
       ]
     }).then(res => res.present());

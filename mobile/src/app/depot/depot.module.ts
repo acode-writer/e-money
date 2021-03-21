@@ -20,9 +20,9 @@ import {IonicStorageModule} from "@ionic/storage";
     IonicModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
-    DepotPageRoutingModule
+    DepotPageRoutingModule,
   ],
   declarations: [DepotPage],
-  providers: [AuthInterceptorProvider,InterfaceService,DepotService]
+  providers: [AuthInterceptorProvider,DepotService]
 })
 export class DepotPageModule {}

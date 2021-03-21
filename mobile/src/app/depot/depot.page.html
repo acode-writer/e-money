@@ -1,49 +1,71 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>depot</ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-item button detail="false" (click)="onDeposit()">
-            <ion-label>Emetteur</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item button detail="false" (click)="onWithdarawal()">
-            <ion-label>Bénéficiaire</ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
-</ion-header>
+<!--<ion-header>-->
+<!--  <ion-toolbar>-->
+<!--    <ion-title>depot</ion-title>-->
+<!--  </ion-toolbar>-->
+<!--  <ion-toolbar>-->
+<!--    <ion-grid>-->
+<!--      <ion-row>-->
+<!--        <ion-col>-->
+<!--          <ion-item button detail="false" (click)="onDeposit()">-->
+<!--            <ion-label>Emetteur</ion-label>-->
+<!--          </ion-item>-->
+<!--        </ion-col>-->
+<!--        <ion-col>-->
+<!--          <ion-item button detail="false" (click)="onWithdarawal()">-->
+<!--            <ion-label>Bénéficiaire</ion-label>-->
+<!--          </ion-item>-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
+<!--    </ion-grid>-->
+<!--  </ion-toolbar>-->
+<!--</ion-header>-->
 
 <ion-content>
+  <div id="card">
+    <div id="card-header">
+      <ion-button fill="clear" id="home" [routerLink]="['/tabs']">
+        <ion-icon name="home" size="large"></ion-icon>
+      </ion-button>
+      <div id="logo">
+        <img src="assets/images/logo-money-sa.png" alt="">
+      </div>
+    </div>
+    <div id="card-text">
+      <span><ion-icon src="assets/icon/blue-depot.svg"></ion-icon>Dépôt</span>
+    </div>
+  </div>
+  <div id="nav-link">
+    <ion-item button detail="false" (click)="onDeposit()">
+      <ion-label>Emetteur</ion-label>
+    </ion-item>
+    <ion-item button detail="false" (click)="onWithdarawal()">
+      <ion-label>Bénéficiaire</ion-label>
+    </ion-item>
+  </div>
+
   <form method="post" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div id="emetteur" *ngIf="!isEmit">
-      <ion-list formGroupName="depositClient">
-        <ion-item >
-          <ion-label position="floating">N° CNI</ion-label>
-          <ion-input inputmode="number" formControlName="nicNumber" #nic (ionChange)="findDepositClientByNci(nic)"></ion-input>
+      <ion-list formGroupName="depositClient" class="ion-no-margin ion-">
+        <ion-item class="ion-no-margin">
+          <ion-label position="floating" class="ion-no-margin">N° CNI</ion-label>
+          <ion-input inputmode="number" formControlName="nicNumber" class="ion-no-margin" #nic (ionChange)="findDepositClientByNci(nic)"></ion-input>
         </ion-item>
         <div *ngFor="let error of errorMessage.nicNumber">
           <ng-container *ngIf="nicNumber.hasError(error.type) && (nicNumber.dirty || nicNumber.touched)">
             <small class="error-message"> {{error.message}} </small>
           </ng-container>
         </div>
-        <ion-item>
-          <ion-label position="floating">Nom</ion-label>
-          <ion-input formControlName="lastname"></ion-input>
+        <ion-item class="ion-no-margin">
+          <ion-label position="floating" class="ion-no-margin">Nom</ion-label>
+          <ion-input formControlName="lastname" class="ion-no-margin"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Prénom</ion-label>
-          <ion-input  formControlName="firstname"></ion-input>
+          <ion-label position="floating" class="ion-no-margin">Prénom</ion-label>
+          <ion-input  formControlName="firstname" class="ion-no-margin"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating">Téléphone</ion-label>
-          <ion-input inputmode="tel" formControlName="phoneNumber"></ion-input>
+        <ion-item class="ion-no-margin">
+          <ion-label position="floating" class="ion-no-margin">Téléphone</ion-label>
+          <ion-input inputmode="tel" formControlName="phoneNumber" class="ion-no-margin"></ion-input>
         </ion-item>
         <div *ngFor="let error of errorMessage.phoneNumber">
           <ng-container *ngIf="phoneNumber.hasError(error.type) && (phoneNumber.dirty || phoneNumber.touched)">
@@ -51,43 +73,32 @@
           </ng-container>
         </div>
       </ion-list>
-      <ion-item>
-        <ion-label position="floating">Montant</ion-label>
-        <ion-input type="number" formControlName="amount" (ionChange)="onFessCalculate()"></ion-input>
+      <ion-item class="ion-no-margin">
+        <ion-label position="floating" class="ion-no-margin">Montant</ion-label>
+        <ion-input type="number" formControlName="amount" class="ion-no-margin" (ionChange)="onFessCalculate()"></ion-input>
       </ion-item>
       <div *ngFor="let error of errorMessage.amount">
         <ng-container *ngIf="amount.hasError(error.type) && (amount.dirty || amount.touched)">
           <small class="error-message"> {{error.message}} </small>
         </ng-container>
       </div>
-      <ion-grid>
-        <ion-row>
-          <ion-col></ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label position="floating">Frais</ion-label>
-              <ion-input inputmode="number" color="danger" [value]="fees" disabled></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-item >
-        <ion-label position="floating">Total</ion-label>
-        <ion-input inputmode="number" disabled [value]="total"></ion-input>
-      </ion-item>
+      <div >
+        <div id="right">
+          <span>Frais</span>
+          <br>
+          <span>{{fees}}</span>
+        </div>
+      </div>
+      <div>
+        <div id="left">
+          <span>Total</span><br>
+          <span>{{total}}</span>
+        </div>
+      </div>
       <ion-button expand="block" (click)="onWithdarawal()" >Suivant</ion-button>
     </div>
     <div id="beneficiaire" *ngIf="isEmit">
       <ion-list formGroupName="withdrawalClient">
-        <ion-item >
-          <ion-label position="floating">N° CNI</ion-label>
-          <ion-input inputmode="number" formControlName="nicNumber" #cin (ionChange)="findWithdrawalClient(cin)"></ion-input>
-        </ion-item>
-        <div *ngFor="let error of errorMessage.nicNumber">
-          <ng-container *ngIf="_nicNumber.hasError(error.type) && (_nicNumber.dirty || _nicNumber.touched)">
-            <small class="error-message"> {{error.message}} </small>
-          </ng-container>
-        </div>
         <ion-item>
           <ion-label position="floating">Prénom</ion-label>
           <ion-input formControlName="firstname"></ion-input>
@@ -98,7 +109,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Téléphone</ion-label>
-          <ion-input inputmode="tel" formControlName="phoneNumber"></ion-input>
+          <ion-input inputmode="tel" formControlName="phoneNumber" #phone (ionInput)="findWithdrawalClient(phone)"></ion-input>
         </ion-item>
         <div *ngFor="let error of errorMessage.phoneNumber">
           <ng-container *ngIf="_phoneNumber.hasError(error.type) && (_phoneNumber.dirty || _phoneNumber.touched)">
