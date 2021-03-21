@@ -1,0 +1,61 @@
+<ion-content>
+  <div id="card">
+    <div id="card-header">
+      <ion-button fill="clear" id="home" [routerLink]="['/tabs']">
+        <ion-icon name="home" size="large"></ion-icon>
+      </ion-button>
+      <div id="logo">
+        <img src="assets/images/logo-money-sa.png" alt="">
+      </div>
+    </div>
+    <div id="card-text">
+      <span><ion-icon src="assets/icon/commission-blue.svg"></ion-icon>Mes commissions</span>
+    </div>
+  </div>
+<!--  <ion-grid>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        <select class="filter">-->
+<!--          <option value="" selected>Type</option>-->
+<!--        </select>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <select class="filter">-->
+<!--          <option value="" selected>Du</option>-->
+<!--        </select>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <select class="filter">-->
+<!--          <option value="" selected>Au</option>-->
+<!--        </select>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-grid>-->
+  <table>
+    <thead>
+      <tr>
+        <th>Date </th>
+        <th>Type</th>
+        <th>Montant</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of dataSource">
+        <td>{{transaction.depositAt | date : 'YYYY.mm.dd'}}</td>
+        <td *ngIf="transaction.withdrewAt; else notShow">
+          Retrait
+        </td>
+        <ng-template #notShow>
+          <td >
+            Dépot
+          </td>
+        </ng-template>
+        <td>{{transaction.amount}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="total">
+    <span id="total-text">Total</span>
+    <span id="total-value"> {{totalCommission}}</span>
+  </div>
+</ion-content>
