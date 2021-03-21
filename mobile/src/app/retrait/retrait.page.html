@@ -1,10 +1,25 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>retrait</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div id="card">
+    <div id="card-header">
+      <ion-button fill="clear" id="home" [routerLink]="['/tabs']">
+        <ion-icon name="home" size="large"></ion-icon>
+      </ion-button>
+      <div id="logo">
+        <img src="assets/images/logo-money-sa.png" alt="">
+      </div>
+    </div>
+    <div id="card-text">
+      <span><ion-icon src="assets/icon/blue-depot.svg"></ion-icon>Retrait</span>
+    </div>
+  </div>
+  <div id="nav-link">
+    <ion-item button detail="false" (click)="onBenef()">
+      <ion-label>Bénéficiaire</ion-label>
+    </ion-item>
+    <ion-item button detail="false" (click)="onEmit()">
+      <ion-label>Emetteur</ion-label>
+    </ion-item>
+  </div>
   <form [formGroup]="form" (ngSubmit)="retirer()">
     <ion-item>
       <ion-label position="floating">Code</ion-label>
@@ -15,74 +30,57 @@
         <small class="error-message"> {{error.message}} </small>
       </ng-container>
     </div>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-item button detail="false" (click)="onBenef()">
-            <ion-label>Bénéficiaire</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item button detail="false" (click)="onEmit()">
-            <ion-label>Émetteur</ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
     <div *ngIf="isBenef">
       <ion-item>
         <ion-label position="floating">N° NCI</ion-label>
-        <ion-input type="number" formControlName="nicNumber"></ion-input>
+        <ion-input  formControlName="nicNumber"></ion-input>
       </ion-item>
       <div *ngFor="let error of errorMessage.error">
         <ng-container *ngIf="nicNumber.hasError(error.type) && (nicNumber.dirty || nicNumber.touched)">
           <small class="error-message"> {{error.message}} </small>
         </ng-container>
       </div>
-      <ion-item lines="none">
-        <ion-label position="floating">NOM ET PRÉNOM</ion-label>
-        <ion-input disabled [value]="transaction?.withdrawalClient?.fullname"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">MONTANT À RECEVOIR</ion-label>
-        <ion-input disabled [value]="transaction?.amount"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">TÉLÉPHONE</ion-label>
-        <ion-input disabled [value]="transaction?.withdrawalClient?.phoneNumber"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">DATE D'ENVOI</ion-label>
-        <ion-input disabled [value]="transaction?.depositAt | date"></ion-input>
-      </ion-item>
+      <div class="result">
+        <div class="result-label">NOM & PRÉNOM</div>
+        <div class="result-text" > {{transaction?.withdrawalClient?.fullname}}</div>
+      </div>
+      <div class="result">
+        <div class="result-label">MONTANT À RECEVOIR</div>
+        <div class="result-text" >{{transaction?.amount}}</div>
+      </div>
+      <div class="result">
+        <div class="result-label">TÉLÉPHONE</div>
+        <div class="result-text" > {{transaction?.withdrawalClient?.phoneNumber}}</div>
+      </div>
+      <div class="result">
+        <div class="result-label">DATE D'ENVOI</div>
+        <div class="result-text" > {{transaction?.depositAt | date}}</div>
+      </div>
     </div>
     <div *ngIf="!isBenef">
-      <ion-item>
-        <ion-label position="floating">N° NCI</ion-label>
-        <ion-input disabled [value]="transaction?.depositClient?.nicNumber"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">NOM ET PRÉNOM</ion-label>
-        <ion-input disabled [value]="transaction?.depositClient?.fullname"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">MONTANT ENVOYÉ</ion-label>
-        <ion-input disabled [value]="transaction?.amount"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">TÉLÉPHONE</ion-label>
-        <ion-input disabled [value]="transaction?.depositClient?.phoneNumber"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">DATE D'ENVOI</ion-label>
-        <ion-input disabled [value]="transaction?.depositAt | date"></ion-input>
-      </ion-item>
+      <div class="result">
+        <div class="result-label">N° NCI</div>
+        <div class="result-text" > {{transaction?.depositClient?.nicNumber}}</div>
+      </div>
+      <div class="result">
+        <div class="result-label">NOM & PRÉNOM</div>
+        <div class="result-text" > {{transaction?.depositClient?.fullname}}</div>
+      </div>
+      <div class="result">
+        <div class="result-label">MONTANT ENVOYÉ</div>
+        <div class="result-text"  [textContent]="transaction?.amount"></div>
+      </div>
+      <div class="result">
+        <div class="result-label">TÉLÉPHONE</div>
+        <div class="result-text"  [textContent]="transaction?.depositClient?.phoneNumber"></div>
+      </div>
+      <div class="result">
+        <div class="result-label">DATE D'ENVOI</div>
+        <div class="result-text" [textContent]="transaction?.depositAt | date"></div>
+      </div>
     </div>
-    <ion-item>
-      <ion-label>{{form.valid}}</ion-label>
-    </ion-item>
-    <div >
-      <ion-button type="submit" [disabled]="!form.valid">Retirer</ion-button>
+    <div *ngIf="canBeWithdawed">
+      <ion-button type="submit" [disabled]="!form.valid" id="btn-retrait">Retirer</ion-button>
     </div>
   </form>
 </ion-content>

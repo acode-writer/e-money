@@ -20,9 +20,11 @@ import {InterfaceService} from "../services/interface/interface.service";
     IonicModule,
     RetraitPageRoutingModule,
     HttpClientModule,
-    IonicStorageModule.forRoot(),
   ],
   declarations: [RetraitPage],
-  providers: [RetraitService,AuthInterceptorProvider,InterfaceService]
+  providers: [
+    AuthInterceptorProvider,
+    RetraitService,
+  ]
 })
 export class RetraitPageModule {}

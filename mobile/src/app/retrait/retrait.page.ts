@@ -5,6 +5,7 @@ import {Subscription} from "rxjs";
 import {AlertController} from "@ionic/angular";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {InterfaceService} from "../services/interface/interface.service";
 
 @Component({
   selector: 'app-retrait',
@@ -16,6 +17,8 @@ export class RetraitPage implements OnInit, OnDestroy {
   private transactionSubscription: Subscription;
   private withdrawalSubscription: Subscription;
   public isBenef = true;
+  private homePath = '/tabs';
+  public canBeWithdawed = true;
   public errorMessage = {
     error: [
       {type: 'required', message: 'Ce champs  est obligatoire'},
@@ -26,9 +29,13 @@ export class RetraitPage implements OnInit, OnDestroy {
   };
   public form : FormGroup;
   constructor(private retraitService: RetraitService, private alertCtrl: AlertController,
-              private router: Router, private fb: FormBuilder) { }
+              private router: Router, private fb: FormBuilder, private interfaceService: InterfaceService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.initForm();
+    await this.interfaceService.getConnectedUser();
+  }
+  initForm() {
     this.form = this.fb.group({
       transfertCode: ['', [Validators.required]],
       nicNumber: ['',[
@@ -37,7 +44,7 @@ export class RetraitPage implements OnInit, OnDestroy {
         Validators.maxLength(13),
         Validators.pattern('[0-9]{13,13}')
       ]]
-    })
+    });
   }
   get nicNumber() {
     return this.form.get('nicNumber');
@@ -50,6 +57,11 @@ export class RetraitPage implements OnInit, OnDestroy {
       .subscribe(
         (transaction: TransactionInterface) => {
           this.transaction = transaction['hydra:member'][0];
+          const withdrawAt = this.transaction?.withdrewAt;
+          if (withdrawAt){
+            this.canBeWithdawed = false;
+            this.presentAlert('Retrait','Cette transaction a dejà été retiré.');
+          }
         },
         error => {
           console.log(error);
@@ -105,9 +117,8 @@ export class RetraitPage implements OnInit, OnDestroy {
           buttons: [
             {
               text: 'Annuler',
-              handler: () => {
-                this.router.navigate(['/interface']);
-              }},
+              handler: () => this.router.navigateByUrl(this.homePath)
+            },
             {
               text: 'Confirmer',
               handler: () => {
@@ -115,16 +126,27 @@ export class RetraitPage implements OnInit, OnDestroy {
                 this.withdrawalSubscription = this.retraitService.makeWithdraal(id,data)
                   .subscribe(
                     (transaction: TransactionInterface) => {
-                      console.log(transaction);
+                      const solde = transaction.account.balance;
+                      this.interfaceService.solde.next(solde);
+                      return this.router.navigateByUrl(this.homePath);
                     }
                   );
               }
             }
           ]
         }).then(res => res.present());
-
       }
     }
+  }
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertCtrl.create({
+      header: header,
+      message: message,
+      buttons: [
+        {text: 'Ok', handler: () => this.router.navigateByUrl(this.homePath)}
+      ]
+    });
+    await alert.present();
   }
   ngOnDestroy(): void {
     this.transactionSubscription?.unsubscribe();
