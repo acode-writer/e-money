@@ -26,6 +26,7 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
+
     acme_api.event.jwt_created_listener:
         class: App\Token\JWTUpdateListener
         arguments: [ '@request_stack' ]

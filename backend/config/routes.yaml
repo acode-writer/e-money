@@ -6,6 +6,12 @@ get_client_by_nic:
   methods: [GET]
   defaults:
     _controller: App\Controller\ClientController::getClientByNic
+get_client_by_phone_number:
+  path: /api/user/client/phone-number/{phoneNumber}
+  methods: [GET]
+  defaults:
+    _controller: App\Controller\ClientController::getClientByPhoneNumber
+
 #make_deposit:
 #  path: /api/user/transactions
 #  methods: [POST]

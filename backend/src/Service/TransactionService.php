@@ -27,9 +27,8 @@ class TransactionService
         $fees = $this->calculateFees($amount);
         $stateFees = $this->calculatePerPercent($fees,40);
         $systemFees = $this->calculatePerPercent($fees,30);
-        $rest = $fees - ($stateFees + $systemFees);
         $ttc = $amount + $fees;
-        $depositFees = $this->calculatePerPercent($rest,10);
+        $depositFees = $this->calculatePerPercent($fees,10);
         $whoMakeDeposit = $this->tokenStorage->getToken()->getUser();
         $accountAmount = $data->getAccount()->getBalance();
         $data->getAccount()->setBalance($accountAmount - $ttc);
@@ -42,20 +41,19 @@ class TransactionService
             ->setTransfertCode($code)
             ->setDepositAt($depositAt)
             ->setStateFees($stateFees);
-        if ($data->getDepositClient()->getId()){
-            $data->getDepositClient()->addDeposit($data);
-        }
+//        if ($data->getDepositClient()->getId()){
+//            $data->getDepositClient()->addDeposit($data);
+//        }
         return  $data;
     }
 
     public function makeWithdrawalTransaction($data)
     {
-        $transfertCode = $data->getTransfertCode();
+//        $transfertCode = $data->getTransfertCode();
         $fees = $data->getFees();
         $stateFees = $data->getStateFees();
         $systemFees = $data->getSytemFees();
-        $rest = $fees - ($stateFees + $systemFees);
-        $withdrawalFees = $this->calculatePerPercent($rest,20);
+        $withdrawalFees = $this->calculatePerPercent($fees,20);
         $withdrawal = $this->tokenStorage->getToken()->getUser();
         $account = $data->getAccount();
         $accountBalance = $account->getBalance();
@@ -63,15 +61,14 @@ class TransactionService
         $data->setWithdrawal($withdrawal)
             ->setWithdrawalFees($withdrawalFees)
             ->setWithdrewAt(new \DateTime())
-            ->setAmount(0)
             ->getAccount()->setBalance($accountBalance + $amount);
-        if ($data->getWithdrawalClient()->getId()){
-            $data->getWithdrawalClient()->addWithdrawal($data);
-        }
+//        if ($data->getWithdrawalClient()->getId()){
+//            $data->getWithdrawalClient()->addWithdrawal($data);
+//        }
         return $data;
     }
 
-    public function genearateTransactionCode()
+    public function genearateTransactionCode(): string
     {
         $code = "".random_int(100000000,999999999);
         $code = str_split($code,3);

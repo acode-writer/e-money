@@ -30,7 +30,7 @@ class Client
     private $phoneNumber;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $nicNumber;
 

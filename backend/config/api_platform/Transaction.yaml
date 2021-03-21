@@ -14,6 +14,7 @@ App\Entity\Transaction:
                 groups: ['make_deposit:write']
             normalization_context:
                 groups: ['make_deposit:read']
+            validation_groups: [App\Entity\Transaction,'make_a_deposit']
             controller: App\Controller\ClientController::makeDeposit
         get_transaction_by_code:
             method: GET

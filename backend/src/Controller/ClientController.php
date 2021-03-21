@@ -25,16 +25,20 @@ class ClientController extends AbstractController
         $this->validator = $validator;
     }
 
-    public function getClientByNic($nic,ClientRepository $clientRepository)
+    public function getClientByNic($nic,ClientRepository $clientRepository): Response
     {
         $client = $clientRepository->findOneBy(["nicNumber" => $nic]);
         return $this->json($client, Response::HTTP_OK);
     }
 
-    public function makeDeposit(Request $request, TransactionService $transactionService)
+    public function getClientByPhoneNumber($phoneNumber, ClientRepository $clientRepository)
+    {
+        $client = $clientRepository->findOneBy(["phoneNumber" => $phoneNumber]);
+        return $this->json($client, Response::HTTP_OK);
+    }
+    public function makeDeposit(Request $request, TransactionService $transactionService): Response
     {
         $data = $request->getContent();
-        dd($data);
         $transaction = $this->serializer->deserialize($data,'App\Entity\Transaction','json',["groups"=>["make_deposit:write"]]);
         $transaction = $transactionService->makeDepositTransaction($transaction);
         $errors = $this->validator->validate($transaction);

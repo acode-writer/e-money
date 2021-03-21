@@ -6,6 +6,10 @@ App\Entity\Transaction:
       groups: ['make_deposit:write','transaction:read','client:read','get_agence_parts:read','make_deposit:read','account:read']
     account:
       groups: ['make_deposit:write','transaction:read','client:read']
+    deposit:
+      groups: ['transaction:read']
+    withdrawal:
+      groups: ['transaction:read']
     depositClient:
       groups: ['make_deposit:write','transaction:read','make_deposit:read','account:read']
     withdrawalClient:
@@ -23,4 +27,4 @@ App\Entity\Transaction:
     depositAt:
       groups: ['make_deposit:read','transaction:read','client:read']
     withdrewAt:
-      groups: ['client:read']
+      groups: ['client:read','transaction:read']
