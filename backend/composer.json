@@ -11,6 +11,7 @@
     "composer/package-versions-deprecated": "1.11.99.1",
     "doctrine/annotations": "^1.0",
     "doctrine/doctrine-bundle": "^2.2",
+    "doctrine/doctrine-fixtures-bundle": "^3.4",
     "doctrine/doctrine-migrations-bundle": "^3.0",
     "doctrine/orm": "^2.8",
     "easycorp/easyadmin-bundle": "^3.2",
@@ -28,6 +29,7 @@
     "symfony/property-access": "5.2.*",
     "symfony/property-info": "5.2.*",
     "symfony/proxy-manager-bridge": "5.2.*",
+    "symfony/requirements-checker": "^2.0",
     "symfony/security-bundle": "5.2.*",
     "symfony/serializer": "5.2.*",
     "symfony/translation": "5.2.*",
@@ -36,7 +38,6 @@
     "symfony/yaml": "5.2.*"
   },
   "require-dev": {
-    "doctrine/doctrine-fixtures-bundle": "^3.4",
     "fzaninotto/faker": "^1.9",
     "symfony/maker-bundle": "^1.29"
   },
@@ -65,16 +66,17 @@
   "scripts": {
     "auto-scripts": {
       "cache:clear": "symfony-cmd",
-      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+      "assets:install %PUBLIC_DIR%": "symfony-cmd",
+      "requirements-checker": "script"
     },
     "post-install-cmd": [
-      "@auto-scripts"
+      "@auto-scripts",
+      "php bin/console doctrine:migrations:migrate",
+      "php bin/console doctrine:schema:update --force",
+      "php bin/console doctrine:fixtures:load --append --group=creation"
     ],
     "post-update-cmd": [
       "@auto-scripts"
-    ],
-    "compile": [
-      "php bin/console doctrine:migrations:migrate"
     ]
   },
   "conflict": {
