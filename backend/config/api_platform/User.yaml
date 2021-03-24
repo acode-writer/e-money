@@ -9,6 +9,11 @@ App\Entity\User:
               resourceClass: App\Entity\Transaction
               collection: true
               path: /{id}/transactions
+      withdrawalTransactions:
+          subresource:
+             resourceClass: App\Entity\Transaction
+             collection: true
+             path: /{id}/transactions
       accounts:
           subresource:
               resourceClass: App\Entity\Account
