@@ -8,6 +8,7 @@ import {AlertController} from "@ionic/angular";
 import {Router} from "@angular/router";
 import {ClientInterface} from "../models/client.interface";
 import {TransactionInterface} from "../models/transaction.interface";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-depot',
@@ -245,6 +246,7 @@ export class DepotPage implements OnInit, OnDestroy {
       ]
     }).then(res => res.present());
   }
+
   ngOnDestroy(): void {
     this.depositSubscription?.unsubscribe();
     this.interfaceService.userSubscription?.unsubscribe();

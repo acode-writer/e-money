@@ -79,6 +79,7 @@ export class RetraitPage implements OnInit, OnDestroy {
 
   async retirer(){
     if (this.form.valid){
+      console.log(this.form.value);
       if (this.transaction) {
         const data = {
           transfertCode: this.transaction.transfertCode,
@@ -97,7 +98,7 @@ export class RetraitPage implements OnInit, OnDestroy {
           '</ion-item>' +
           '<ion-item lines="none">' +
           '<ion-label position="floating">N° CNI</ion-label>' +
-          '<ion-label>' + this.transaction.withdrawalClient?.nicNumber + '</ion-label>'+
+          '<ion-label>' + data.withdrawalClient?.nicNumber + '</ion-label>'+
           '</ion-item>' +
           '<ion-item lines="none">' +
           '<ion-label position="floating">MONTANT REÇU</ion-label>' +

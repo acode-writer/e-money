@@ -1,0 +1,18 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>Date</ion-col>
+    <ion-col>Type</ion-col>
+    <ion-col>Montant</ion-col>
+  </ion-row>
+  <ion-row *ngFor="let transaction of dataSource">
+    <ion-col>{{transaction.depositAt | date : 'YYYY.MM.dd'}}</ion-col>
+    <ion-col>{{transaction.withdrewAt ? transaction.withdrawal?.firstname + ' ' + transaction.withdrawal?.lastname : transaction.deposit?.firstname + ' ' + transaction.deposit?.lastname}}</ion-col>
+    <ion-col>{{transaction.type}}</ion-col>
+    <ion-col>{{transaction.amount}}</ion-col>
+  </ion-row>
+</ion-grid>
+
+<div id="total">
+  <span id="total-text">Total</span>
+  <span id="total-value"> {{total}}</span>
+</div>

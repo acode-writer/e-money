@@ -17,4 +17,5 @@ export interface TransactionInterface {
   withdrewAt: string;
   deposit: UserInterface;
   withdrawal: UserInterface;
+  type: string;
 }

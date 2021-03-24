@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TabsPage } from './tabs.page';
+import {RoleGuard} from "../guards/role-guard/role.guard";
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'tab4',
+        canActivate: [RoleGuard],
         loadChildren: () => import('../commission/commission.module').then(m => m.CommissionPageModule)
       },
       {

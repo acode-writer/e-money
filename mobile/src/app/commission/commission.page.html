@@ -12,50 +12,27 @@
       <span><ion-icon src="assets/icon/commission-blue.svg"></ion-icon>Mes commissions</span>
     </div>
   </div>
-<!--  <ion-grid>-->
-<!--    <ion-row>-->
-<!--      <ion-col>-->
-<!--        <select class="filter">-->
-<!--          <option value="" selected>Type</option>-->
-<!--        </select>-->
-<!--      </ion-col>-->
-<!--      <ion-col>-->
-<!--        <select class="filter">-->
-<!--          <option value="" selected>Du</option>-->
-<!--        </select>-->
-<!--      </ion-col>-->
-<!--      <ion-col>-->
-<!--        <select class="filter">-->
-<!--          <option value="" selected>Au</option>-->
-<!--        </select>-->
-<!--      </ion-col>-->
-<!--    </ion-row>-->
-<!--  </ion-grid>-->
-  <table>
-    <thead>
-      <tr>
-        <th>Date </th>
-        <th>Type</th>
-        <th>Montant</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let transaction of dataSource">
-        <td>{{transaction.depositAt | date : 'YYYY.mm.dd'}}</td>
-        <td *ngIf="transaction.withdrewAt; else notShow">
-          Retrait
-        </td>
-        <ng-template #notShow>
-          <td >
-            Dépot
-          </td>
-        </ng-template>
-        <td>{{transaction.amount}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div id="total">
-    <span id="total-text">Total</span>
-    <span id="total-value"> {{totalCommission}}</span>
-  </div>
+  <ion-row>
+    <ion-col size="3" *ngIf="isAll">
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none" class="filter">
+        <ion-select placeholder="Type" (ionChange)="onSelectType($event)">
+          <ion-select-option value="depot">Dépot</ion-select-option>
+          <ion-select-option value="retrait">Retrait</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none" class="filter">
+        <ion-datetime placeholder="Du" display-timezone="utc" (ionChange)="onStartDate($event,true)"></ion-datetime>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none" class="filter">
+        <ion-datetime placeholder="Au"  display-timezone="utc" (ionChange)="onStartDate($event,false)"></ion-datetime>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <app-my-transactions [dataSource]="dataSource" [total]="totalCommission"></app-my-transactions>
 </ion-content>

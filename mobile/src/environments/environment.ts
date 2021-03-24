@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   api: 'http://localhost:8000/api',
   token: 'ion-money-sa-token',
-  connectedUser: 'ion-connected-user'
+  connectedUser: 'ion-connected-user',
+  mercure: 'http://localhost:3000/.well-known/mercure'
 };
 
 /*

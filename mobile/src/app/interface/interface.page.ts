@@ -5,6 +5,7 @@ import {InterfaceService} from "../services/interface/interface.service";
 import {LoginService} from "../services/login/login.service";
 import {Router} from "@angular/router";
 import {MenuController} from "@ionic/angular";
+import {UserInterface} from "../models/user.interface";
 
 @Component({
   selector: 'app-interface',
@@ -19,6 +20,25 @@ export class InterfacePage implements OnInit, OnDestroy {
 
   async ngOnInit() {
     await this.interfaceService.getConnectedUser();
+    this.onMercureSubscription();
+  }
+
+  async onMercureSubscription() {
+    this.interfaceService.connectedUser.subscribe(
+      (user : UserInterface) => {
+        if (user) {
+          const accountId = user.agence?.account?.id;
+          const url = new URL(environment.mercure);
+          url.searchParams.append('topic', 'make-deposit/accounts/'+accountId);
+          url.searchParams.append('topic', 'make-withdrawal/accounts/'+accountId);
+          // @ts-ignore
+          const eventSource = new EventSource(url);
+          eventSource.onmessage = event => {
+            console.log(JSON.parse(event.data));
+          };
+        }
+      }
+    );
   }
 
   openFirst() {
@@ -34,6 +54,7 @@ export class InterfacePage implements OnInit, OnDestroy {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
   }
+
 
   ngOnDestroy(): void {
     // this.interfaceService.userSubscription?.unsubscribe();

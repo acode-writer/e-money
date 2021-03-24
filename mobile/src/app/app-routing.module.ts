@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {AuthGuard} from "./guards/auth-guard/auth.guard";
+import {RoleGuard} from "./guards/role-guard/role.guard";
 
 const routes: Routes = [
   {
@@ -21,6 +23,7 @@ const routes: Routes = [
   },*/
   {
     path: 'depot',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./depot/depot.module').then( m => m.DepotPageModule)
   },
   /*{
@@ -29,18 +32,22 @@ const routes: Routes = [
   },*/
   {
     path: 'retrait',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./retrait/retrait.module').then( m => m.RetraitPageModule)
   },
   {
     path: 'tabs',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   },
   {
     path: 'transaction',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./transaction/transaction.module').then( m => m.TransactionPageModule)
   },
   {
     path: 'commission',
+    canActivate: [AuthGuard,RoleGuard],
     loadChildren: () => import('./commission/commission.module').then( m => m.CommissionPageModule)
   },
 ];

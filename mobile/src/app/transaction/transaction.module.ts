@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -10,15 +10,16 @@ import { TransactionPage } from './transaction.page';
 import {AuthInterceptorProvider} from "../interceptors/auth.interceptor";
 import {TransactionService} from "../services/transaction/transaction.service";
 import {MatTableModule} from "@angular/material/table";
+import {MyTransactionsComponent} from "../my-transactions/my-transactions.component";
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     TransactionPageRoutingModule,
   ],
-  declarations: [TransactionPage],
+  declarations: [TransactionPage,MyTransactionsComponent],
   providers: [
     AuthInterceptorProvider,
     TransactionService,

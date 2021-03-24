@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommissionPageRoutingModule } from './commission-routing.module';
 
 import { CommissionPage } from './commission.page';
+import {MyTransactionsComponent} from "../my-transactions/my-transactions.component";
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { CommissionPage } from './commission.page';
     IonicModule,
     CommissionPageRoutingModule
   ],
-  declarations: [CommissionPage]
+  declarations: [CommissionPage, MyTransactionsComponent]
 })
 export class CommissionPageModule {}

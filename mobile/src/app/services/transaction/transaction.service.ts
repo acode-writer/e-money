@@ -16,10 +16,26 @@ export class TransactionService {
   public allTransactions: TransactionInterface[];
   constructor(private http: HttpClient) { }
   getAllTransactions(agenceId: number): Observable<AgenceInterface> {
-    return this.http.get<AgenceInterface>(`${environment.api}/agences/${agenceId}/account/transactions`)
+    return this.http.get<AgenceInterface>(`${environment.api}/agences/${agenceId}/account/transactions`);
   }
-  getMyTransactions(userId: number): Observable<UserInterface>{
-    return this.http.get<UserInterface>(`${environment.api}/admin/users/${userId}/deposit_transactions`)
+  getMyDepositTransactions(userId: number): Observable<UserInterface> {
+    return this.http.get<UserInterface>(`${environment.api}/admin/users/${userId}/deposit_transactions`);
+  }
+  getMyWithdrawalTransactions(userId: number): Observable<UserInterface> {
+    return this.http.get<UserInterface>(`${environment.api}/admin/users/${userId}/withdrawal_transactions`);
+  }
+  // getMyTransactions(userId: number): Observable<UserInterface>{
+  //   return this.http.get<UserInterface>(`${environment.api}/admin/users/${userId}/deposit_transactions`)
+  // }
+  getMyTransactionsByDate(userId: number,key:string,date: string, isDeposit: boolean) {
+    if(isDeposit) {
+      return this.http.get<TransactionInterface[]>(`${environment.api}/admin/users/${userId}/deposit_transactions?${key}=${date}`);
+    }else {
+      return this.http.get<TransactionInterface[]>(`${environment.api}/admin/users/${userId}/withdrawal_transactions?${key}=${date}`);
+    }
+  }
+  getUserAgence(agenceId: number): Observable<AgenceInterface> {
+    return this.http.get<AgenceInterface>(`${environment.api}/agences/${agenceId}/users`)
   }
   calculateTotal(transactions: TransactionInterface[]){
     const reducer = (accumulateur: number, currentValue: TransactionInterface) => accumulateur + currentValue.amount;
